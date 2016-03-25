@@ -22,11 +22,15 @@ def  Leitor(File):
                     if(row[i]==""):
                         row[i]=-1;
                     p=float(row[i])
-                    if ((p<0) ):
+                    if ((p<=0) ):
 
                         point.append(p)
                     i=i+1
-
+                contador=-1
+                for certo in point:
+                    contador=contador+1
+                    if (certo ==-1):
+                        certo=acerta(contador,point)
 
                 pointsin=Point(point )
 
@@ -36,6 +40,57 @@ def  Leitor(File):
             l=l+1
 
     return pointreturn
+
+def acerta(posicao,point):
+    if (posicao==0):
+        if (point[2]!=-1):
+            if(point[3]!=-1):
+                if(point[6]!=-1):
+                    point[0]=(point[2]+point[3]+point[6])/3
+
+                else:
+                    acerta(6,points)
+            else:
+                acerta(3,points)
+        else:
+            acerta(2,points)
+    elif (posicao==1):
+
+    '''elif (posicao==2):
+
+    elif (posicao==3):
+
+    elif (posicao==4):
+
+    elif (posicao==5):
+
+    elif (posicao==6):
+
+    elif (posicao==7):
+
+    elif (posicao==8):
+
+    elif (posicao==9):
+
+    elif (posicao==10):
+
+    elif (posicao==11):
+
+    elif (posicao==12):
+
+    elif (posicao==13):
+
+    elif (posicao==14):
+
+    elif (posicao==15):
+
+    elif (posicao==16):
+
+    elif (posicao==17):
+
+    elif (posicao==18):'''
+    return
+
 def main():
     points= Leitor("train.csv")
 
@@ -44,13 +99,13 @@ def main():
     lower = 0
     upper = 100
     ncluster=33
-    opt_cut = 0.15
+    opt_cut = 15
     #points = [makeRandomPoint(dimension, lower, upper) for i in xrange(np)]
 
     clusters = kmeans(points, ncluster, opt_cut)
-    for i,c in enumerate(clusters):
-            for p in c.points:
-                print "Cluster: ", i, "\Point :", p
+    #for i,c in enumerate(clusters):
+            #for p in c.points:
+                #print "Cluster: ", i, "\Point :", p
 
 class Point:
     '''
