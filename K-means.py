@@ -4,8 +4,8 @@ import math
 import random
 import subprocess
 import numpy
-sample=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-def  Leitor(File):
+
+def  Leitor(File, string):
     maxi=0;
     with open(File, 'r') as f:
         reader = csv.reader(f, delimiter=',')
@@ -31,84 +31,92 @@ def  Leitor(File):
                 for certo in point:
                     contador=contador+1
                     if (certo ==-1):
-                        certo=acerta(contador,point)
+                        point=acerta(contador,point)
 
                 pointsin=Point(point)
-                defsample(pointsin, row)
+                if(string=="train"):
+                    defsample(pointsin, row)
 
 
                 pointreturn.append(pointsin)
             l=l+1
+            if(string=="test"):
+                device.append(row[0])
 
     return pointreturn
 
 def defsample(point,row):
+    global sample
     if (row[1]=="A001"):
-        global sample[0]=point
+        sample[0]=point
     if (row[1]=="A002"):
-        global sample[1]=point
+        sample[1]=point
     if (row[1]=="A003"):
-        global sample[2]=point
+        sample[2]=point
     if (row[1]=="A004"):
-        global sample[3]=point
+        sample[3]=point
     if (row[1]=="A005"):
-        global sample[4]=point
+        sample[4]=point
     if (row[1]=="A006"):
-        global sample[5]=point
+        sample[5]=point
     if (row[1]=="A007"):
-        global sample[6]=point
+        sample[6]=point
     if (row[1]=="A008"):
-        global sample[7]=point
+        sample[7]=point
     if (row[1]=="A009"):
-        global sample[8]=point
+        sample[8]=point
     if (row[1]=="A010"):
-        global sample[9]=point
+        sample[9]=point
     if (row[1]=="A011"):
-        global sample[10]=point
+        sample[10]=point
     if (row[1]=="A012"):
-        global sample[11]=point
+        sample[11]=point
     if (row[1]=="A013"):
-        global sample[12]=point
+        sample[12]=point
     if (row[1]=="A014"):
-        global sample[13]=point
+        sample[13]=point
     if (row[1]=="A015"):
-        global sample[14]=point
+        sample[14]=point
     if (row[1]=="A016"):
-        global sample[15]=point
+        sample[15]=point
     if (row[1]=="A017"):
-        global sample[16]=point
+        sample[16]=point
     if (row[1]=="A018"):
-        global sample[17]=point
+        sample[17]=point
     if (row[1]=="A019"):
-        global sample[18]=point
+        sample[18]=point
     if (row[1]=="A020"):
-        global sample[19]=point
+        sample[19]=point
     if (row[1]=="A021"):
-        global sample[20]=point
+        sample[20]=point
     if (row[1]=="A022"):
-        global sample[21]=point
+        sample[21]=point
     if (row[1]=="A023"):
-        global sample[22]=point
+        sample[22]=point
     if (row[1]=="A024"):
-        global sample[23]=point
+        sample[23]=point
     if (row[1]=="A025"):
-        global sample[24]=point
+        sample[24]=point
     if (row[1]=="A026"):
-        global sample[25]=point
+        sample[25]=point
     if (row[1]=="A027"):
-        global sample[26]=point
+        sample[26]=point
     if (row[1]=="A028"):
-        global sample[27]=point
+        sample[27]=point
     if (row[1]=="A029"):
-        global sample[28]=point
+        sample[28]=point
     if (row[1]=="A030"):
-        global sample[29]=point
+        sample[29]=point
     if (row[1]=="A031"):
-        global sample[30]=point
+        sample[30]=point
     if (row[1]=="A032"):
-        global sample[31]=point
-    if (row[1]=="A033"):
-        global sample[32]=point
+        sample[31]=point
+    if (row[1]=="A033Front"):
+
+        sample[32]=point
+    if (row[1]=="A033Parking"):
+
+        sample[33]=point
 
 def acerta(posicao,point):
     if (posicao==0):
@@ -124,16 +132,16 @@ def acerta(posicao,point):
         else:
             acerta(2,point)
     elif (posicao==1):
-	   if(point[3]!=-1):
-	       if(point[4]!=-1):
-			if(point[7]):
-				point[1]=(point[3]+point[4]+point[7])/3
-			else:
-				acerta(7,point)
-		else:
-			acerta(4,point)
-	else:
-		acerta(3,point)
+        if(point[3]!=-1):
+
+            if(point[7]):
+                   point[1]=(point[3]+point[7])/2
+            else:
+                   acerta(7,point)
+
+
+        else:
+           acerta(3,point)
 
     elif (posicao==2):
     	if(point[5]!=-1):
@@ -163,13 +171,13 @@ def acerta(posicao,point):
     		acerta(7,point)
 
     elif (posicao==5):
-    	if(point[6]!=-1):
+    	if(point[18]!=-1):
     		if(point[11]!=-1):
-    			point[5]=(point[6]+point[11])/2
+    			point[5]=(point[18]+point[11])/2
     		else:
     			acerta(11,point)
     	else:
-    		acerta(6,point)
+    		acerta(18,point)
 
     elif (posicao==6):
     	if(point[1]!=-1):
@@ -183,7 +191,7 @@ def acerta(posicao,point):
     elif (posicao==7):
     	if(point[3]!=-1):
     		if(point[10]!=-1):
-    			point[7]=(point[4]+point[10])/2
+    			point[7]=(point[3]+point[10])/2
     		else:
     			acerta(10,point)
     	else:
@@ -199,29 +207,29 @@ def acerta(posicao,point):
     		acerta(7,point)
 
     elif (posicao==9):
-    	if(point[6]!=-1):
+    	if(point[1]!=-1):
     		if(point[12]!=-1):
-    			point[9]=(point[6]+point[12])/2
+    			point[9]=(point[1]+point[12])/2
     		else:
     			acerta(12,point)
     	else:
-    		acerta(6,point)
+    		acerta(1,point)
 
     elif (posicao==10):
-    	if(point[8]!=-1):
+    	if(point[1]!=-1):
     		if(point[13]!=-1):
-    			point[10]=(point[8]+point[13])/2
+    			point[10]=(point[1]+point[13])/2
     		else:
     			acerta(13,point)
     	else:
-    		acerta(8,point)
+    		acerta(1,point)
 
     elif (posicao==11):
-    	if(point[12]!=-1):
+    	if(point[9]!=-1):
     		if(point[17]!=-1):
-    			point[11]=(point[12]+point[17])/2
+    			point[11]=(point[9]+point[17])/2
     		else:
-    			acerta(12,point)
+    			acerta(9,point)
     	else:
     		acerta(17,point)
 
@@ -263,21 +271,21 @@ def acerta(posicao,point):
 
     elif (posicao==16):
     	if(point[13]!=-1):
-    		if(point[18]!=-1):
-    			point[16]=(point[13]+point[18])/2
+    		if(point[17]!=-1):
+    			point[16]=(point[13]+point[17])/2
     		else:
-    			acerta(18,point)
+    			acerta(17,point)
     	else:
     		acerta(13,point)
 
     elif (posicao==17):
-    	if(point[12]!=-1):
-    		if(point[15]!=-1):
-    			point[17]=(point[12]+point[15])/2
+    	if(point[5]!=-1):
+    		if(point[18]!=-1):
+    			point[17]=(point[5]+point[18])/2
     		else:
-    			acerta(15,point)
+    			acerta(18,point)
     	else:
-    		acerta(12,point)
+    		acerta(5,point)
 
     elif (posicao==18):
     	if(point[13]!=-1):
@@ -287,24 +295,35 @@ def acerta(posicao,point):
     			acerta(16,point)
     	else:
     		acerta(13,point)
-    return
+    return point
 
 def main():
-    points= Leitor("train.csv")
+
+    arquivosaida=open("saida.txt","w")
 
     np = 100
     dimension=19
     lower = 0
     upper = 100
-    ncluster=33
-    opt_cut = 15
+    ncluster=35
+    opt_cut = 0.001
     #points = [makeRandomPoint(dimension, lower, upper) for i in xrange(np)]
 
-    clusters = kmeans(points, ncluster, opt_cut)
-    #for i,c in enumerate(clusters):
-            #for p in c.points:
-                #print "Cluster: ", i, "\Point :", p
-
+    '''clusters = kmeans(points, ncluster, opt_cut)
+    for i,c in enumerate(clusters):
+            for p in c.points:
+                print "Cluster: ", i, "\Point :", p
+'''
+    ID = kmeans(ncluster, opt_cut)
+    for i,c in enumerate(ID):
+        for p in c:
+            i1=i+1
+            p1=p+1
+            d=str(device[p])
+            istring=str (i1)
+            pstring=str(p1)
+            string1= d + ","+istring+","+pstring+"\n"
+            arquivosaida.write(string1)
 class Point:
     '''
     An point in n dimensional space
@@ -378,11 +397,15 @@ class Cluster:
 
         return Point(centroid_coords)
 
-def kmeans(points, k, cutoff):
+def kmeans(k, cutoff):
 
     # Pick out k random points to use as our initial centroids
     #initial = random.sample(points, k)
-    initial = global sample
+    pointsT= Leitor("train.csv","train")
+    pointsR= Leitor("test.csv","test")
+    global sample
+    initial = sample
+
     # Create k clusters using those centroids
     clusters = [Cluster([p]) for p in initial]
 
@@ -390,13 +413,17 @@ def kmeans(points, k, cutoff):
     loopCounter = 0
     while True:
         # Create a list of lists to hold the points in each cluster
+
         lists = [ [] for c in clusters]
+        ID=[[] for c in clusters]
         clusterCount = len(clusters)
 
         # Start counting loops
         loopCounter += 1
         # For every point in the dataset ...
-        for p in points:
+
+        for p in pointsT:
+
             # Get the distance between that point and the centroid of the first
             # cluster.
             smallest_distance = getDistance(p, clusters[0].centroid)
@@ -417,6 +444,31 @@ def kmeans(points, k, cutoff):
                     clusterIndex = i+1
             lists[clusterIndex].append(p)
 
+
+        t=0;
+        for p in pointsR:
+            t=t+1
+            # Get the distance between that point and the centroid of the first
+            # cluster.
+            smallest_distance = getDistance(p, clusters[0].centroid)
+
+            # Set the cluster this point belongs to
+            clusterIndex = 0
+
+            # For the remainder of the clusters ...
+            for i in range(clusterCount - 1):
+                # calculate the distance of that point to each other cluster's
+                # centroid.
+                distance = getDistance(p, clusters[i+1].centroid)
+                # If it's closer to that cluster's centroid update what we
+                # think the smallest distance is, and set the point to belong
+                # to that cluster
+                if distance < smallest_distance:
+                    smallest_distance = distance
+                    clusterIndex = i+1
+            ID[clusterIndex].append(t)
+            lists[clusterIndex].append(p)
+
         # Set our biggest_shift to zero for this iteration
         biggest_shift = 0.0
 
@@ -431,7 +483,7 @@ def kmeans(points, k, cutoff):
         if biggest_shift < cutoff:
             print "Converged after %s iterations" % loopCounter
             break
-    return clusters
+    return ID
 
 def getDistance(a, b):
     '''
@@ -452,6 +504,7 @@ def makeRandomPoint(n, lower, upper):
     '''
     p = Point([random.uniform(lower, upper) for i in range(n)])
     return p
-
-
+device=[]
+zero=Point([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+sample=[zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero]
 main()
