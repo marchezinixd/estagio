@@ -4,7 +4,7 @@ import math
 import random
 import subprocess
 import numpy
-
+##Faz o tratamento dos dados
 def  Leitor(File, string):
     maxi=0;
     with open(File, 'r') as f:
@@ -13,7 +13,8 @@ def  Leitor(File, string):
 
         pointreturn=[]
 
-
+        ##passa por todas as linhas, se não houver valor ele atribui o valor -1
+        ##Os valores que possui atribui à dimensão do ponto
         for row in reader :
             if(l!=0 ):
                 i=2
@@ -31,20 +32,23 @@ def  Leitor(File, string):
                 for certo in point:
                     contador=contador+1
                     if (certo ==-1):
+                        ##acerta é chamado para os pontos que falharam ao encontrar o valor
                         point=acerta(contador,point)
 
                 pointsin=Point(point)
                 if(string=="train"):
+                    #é pegado um valor de amostra para o centroide inicial
                     defsample(pointsin, row)
 
 
                 pointreturn.append(pointsin)
             l=l+1
             if(string=="test"):
+                #grava o valor real da área para fazer a análise dos resultados
                 Area.append(row[1])
 
     return pointreturn
-
+##Cria um vetor com amostra para cada uma das áreas do Cluster
 def defsample(point,row):
     global sample
     if (row[1]=="A001"):
@@ -117,7 +121,7 @@ def defsample(point,row):
     if (row[1]=="A033Parking"):
 
         sample[33]=point
-
+## Utiliza a média de valores de sensores que possuem valor para gerar um valor para os que não possuem
 def acerta(posicao,point):
     if (posicao==0):
         if (point[2]!=-1):
@@ -303,11 +307,11 @@ def main():
     arquivodados=open("Dados.txt","a")
 
     np = 100
-    dimension=19
+    dimension=19 #número de dimensões
     lower = 0
     upper = 100
-    ncluster=35
-    opt_cut = 1
+    ncluster=35 #número de clusters
+    opt_cut = 1 #valor de optmização
     #points = [makeRandomPoint(dimension, lower, upper) for i in xrange(np)]
 
     '''clusters = kmeans(points, ncluster, opt_cut)
@@ -318,6 +322,8 @@ def main():
     count=0;
     arquivosaida.write("Area,Area_Encontrada,ID\n")
     ID = kmeans(ncluster, opt_cut)
+    #Imprime no arquivo de saída a área pevista e areal e o ID das coordenadas
+    #conta o número de acertos
     for i,c in enumerate(ID):
         for p in c:
             i1=i+1
@@ -337,6 +343,7 @@ def main():
                 count=count+1
             string1= d + ","+istring+","+pstring+"\n"
             arquivosaida.write(string1)
+    #imprime o valor utilizado an optimização e quantos acertos
     opt=str(opt_cut)
     arquivodados.write(opt)
     arquivodados.write(" ")
