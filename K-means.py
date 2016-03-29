@@ -41,7 +41,7 @@ def  Leitor(File, string):
                 pointreturn.append(pointsin)
             l=l+1
             if(string=="test"):
-                device.append(row[0])
+                Area.append(row[1])
 
     return pointreturn
 
@@ -299,14 +299,15 @@ def acerta(posicao,point):
 
 def main():
 
-    arquivosaida=open("saida.txt","w")
+    arquivosaida=open("saida1.csv","w")
+    arquivodados=open("Dados.txt","a")
 
     np = 100
     dimension=19
     lower = 0
     upper = 100
     ncluster=35
-    opt_cut = 0.001
+    opt_cut = 1
     #points = [makeRandomPoint(dimension, lower, upper) for i in xrange(np)]
 
     '''clusters = kmeans(points, ncluster, opt_cut)
@@ -314,16 +315,34 @@ def main():
             for p in c.points:
                 print "Cluster: ", i, "\Point :", p
 '''
+    count=0;
+    arquivosaida.write("Area,Area_Encontrada,ID\n")
     ID = kmeans(ncluster, opt_cut)
     for i,c in enumerate(ID):
         for p in c:
             i1=i+1
             p1=p+1
-            d=str(device[p])
+            d=str(Area[p])
             istring=str (i1)
             pstring=str(p1)
+
+            if (((d[-1])!="g" ) & ((d[-1])!="t")):
+                temp=10*int(d[-2])+int(d[-1])
+
+            if((temp==i1)):
+                count=count+1
+            elif((d[-1]=="g") & (i1==34)):
+                count=count+1
+            elif((d[-1]=="t") & (i1==33)):
+                count=count+1
             string1= d + ","+istring+","+pstring+"\n"
             arquivosaida.write(string1)
+    opt=str(opt_cut)
+    arquivodados.write(opt)
+    arquivodados.write(" ")
+    wcount=str(count)
+    arquivodados.write(wcount)
+    arquivodados.write("\n")
 class Point:
     '''
     An point in n dimensional space
@@ -415,7 +434,7 @@ def kmeans(k, cutoff):
         # Create a list of lists to hold the points in each cluster
 
         lists = [ [] for c in clusters]
-        ID=[[] for c in clusters]
+
         clusterCount = len(clusters)
 
         # Start counting loops
@@ -443,9 +462,25 @@ def kmeans(k, cutoff):
                     smallest_distance = distance
                     clusterIndex = i+1
             lists[clusterIndex].append(p)
+        # Set our biggest_shift to zero for this iteration
+        biggest_shift = 0.0
+
+        # As many times as there are clusters ...
+        for i in range(clusterCount):
+            # Calculate how far the centroid moved in this iteration
+            shift = clusters[i].update(lists[i])
+            # Keep track of the largest move from all cluster centroid updates
+            biggest_shift = max(biggest_shift, shift)
+
+        # If the centroids have stopped moving much, say we're done!
+        if biggest_shift < cutoff:
+            print "Converged after %s iterations" % loopCounter
+            break
 
 
+    while True:
         t=0;
+        ID=[[] for c in clusters]
         for p in pointsR:
             t=t+1
             # Get the distance between that point and the centroid of the first
@@ -466,6 +501,7 @@ def kmeans(k, cutoff):
                 if distance < smallest_distance:
                     smallest_distance = distance
                     clusterIndex = i+1
+
             ID[clusterIndex].append(t)
             lists[clusterIndex].append(p)
 
@@ -483,6 +519,7 @@ def kmeans(k, cutoff):
         if biggest_shift < cutoff:
             print "Converged after %s iterations" % loopCounter
             break
+
     return ID
 
 def getDistance(a, b):
@@ -504,7 +541,7 @@ def makeRandomPoint(n, lower, upper):
     '''
     p = Point([random.uniform(lower, upper) for i in range(n)])
     return p
-device=[]
+Area=[]
 zero=Point([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 sample=[zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero,zero]
 main()
